@@ -1122,51 +1122,33 @@
   .md-linhas2{position:absolute;inset:0;width:100%;height:100%;z-index:2;}
   .md-linhas2 g{fill:none;stroke:var(--ink);stroke-opacity:.26;stroke-width:1.1;}
   .md-linhas2 .pts{fill:var(--ink);fill-opacity:.32;stroke:none;}
-  /* faixas de corredor: a participacao dele em cada terco da largura do campo.
-     Sao o que tira o desenho do vazio — antes o campo era so linha e quatro pontos. */
-  .md-fx{position:absolute;top:0;bottom:0;z-index:1;opacity:0;
-    transition:opacity .8s ease;transition-delay:var(--d);}
-  .mdu.on .md-fx{opacity:1;}
-  .md-fx i{position:absolute;inset:0;
-    background:linear-gradient(180deg,rgba(212,175,55,var(--a)) 0%,
-      rgba(212,175,55,calc(var(--a) * .82)) 34%,
-      rgba(212,175,55,calc(var(--a) * .34)) 68%,transparent 100%);}
-  /* O rotulo da faixa fica na BASE do campo, nao no topo. Duas razoes: no topo ele
-     batia na linha da grande area, e embaixo ele ocupa o terco defensivo, que num
-     extremo fica sempre vazio. A legenda passa a preencher o espaco morto. */
-  .md-fx b{position:absolute;left:0;right:0;bottom:16px;text-align:center;
-    font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.11em;
-    text-transform:uppercase;color:var(--grey-2);font-weight:400;line-height:1.5;}
-  .md-fx b span{display:block;font-family:'Bebas Neue',sans-serif;font-size:21px;
-    letter-spacing:.02em;color:var(--grey);}
-  .md-fx.on b span{color:#e7c65a;}
-  .md-fx.on b{color:#e7c65a;}
   /* token de posicao */
+  /* QUADRANTE, nao circulo — ordem do dono em 09/09/2026. E a mesma linguagem das
+     celulas do mapa de acoes ao lado: quadrado de canto vivo. */
   .md-tk{position:absolute;z-index:3;transform:translate(-50%,-50%) scale(.5);
-    aspect-ratio:1;border-radius:50%;display:flex;flex-direction:column;
+    aspect-ratio:1;border-radius:3px;display:flex;flex-direction:column;
     align-items:center;justify-content:center;gap:1px;opacity:0;cursor:default;
-    background:radial-gradient(circle at 38% 32%,#f0d670,#c9a63c 62%,#a8862c 100%);
-    box-shadow:0 6px 22px rgba(0,0,0,.5),0 0 0 3px rgba(212,175,55,.16);
+    background:linear-gradient(155deg,#f0d670,#d4af37 55%,#b8912b 100%);
+    box-shadow:0 8px 26px rgba(0,0,0,.55),0 0 0 1px rgba(255,240,190,.28) inset;
     transition:opacity .55s cubic-bezier(.2,.9,.3,1),transform .55s cubic-bezier(.2,.9,.3,1);
     transition-delay:var(--d);}
   .mdu.on .md-tk{opacity:1;transform:translate(-50%,-50%) scale(1);}
-  .md-tk.sec{background:radial-gradient(circle at 38% 32%,rgba(226,196,85,.5),
-      rgba(150,124,46,.44) 62%,rgba(110,90,34,.42) 100%);
-    box-shadow:0 4px 14px rgba(0,0,0,.4);}
+  .md-tk.sec{background:linear-gradient(155deg,rgba(226,196,85,.46),rgba(160,132,48,.4) 100%);
+    box-shadow:0 4px 14px rgba(0,0,0,.38);}
   .md-tk .pc{font-family:'Bebas Neue',sans-serif;line-height:.9;color:#1a1206;
     font-size:clamp(14px,2.6cqw,30px);}
   .md-tk.sec .pc{color:rgba(255,240,200,.92);}
   .md-tk .sg{font-family:'JetBrains Mono',monospace;font-size:clamp(6px,1cqw,10px);
     letter-spacing:.1em;color:rgba(26,18,6,.72);}
   .md-tk.sec .sg{color:rgba(255,240,200,.6);}
-  .md-tk::after{content:"";position:absolute;inset:-9px;border-radius:50%;
-    border:1px solid rgba(212,175,55,.35);}
+  .md-tk::after{content:"";position:absolute;inset:-8px;border-radius:6px;
+    border:1px solid rgba(212,175,55,.34);}
   .md-tk.sec::after{display:none;}
   .md-campo{container-type:inline-size;}
   @media (prefers-reduced-motion:reduce){
     .md-c{opacity:var(--op);transform:translateZ(var(--z));animation:none;}
     .md-tk{opacity:1;transform:translate(-50%,-50%);transition:none;}
-    .md-fx{opacity:1;transition:none;} }
+}
   @media(max-width:900px){ .mdu{grid-template-columns:1fr;gap:34px;} }
 
   /* ---------- seletor de recorte do radar ---------- */
@@ -1277,13 +1259,13 @@
         <div class="mdh"><span class="l l-pt">Posições executadas</span><span class="l l-en">Positions played</span><span class="l l-es">Posiciones ejecutadas</span><small><span class="l l-pt">157 jogos de carreira com posição registrada · oGol</span><span class="l l-en">157 career games with a registered position · oGol</span><span class="l l-es">157 partidos de carrera con posición registrada · oGol</span></small></div>
         <div class="md-wrap">
           <div class="md-flat">
-            <div class="md-campo"><div class="md-fx on" style="left:3%;width:31.3%;--a:0.350;--d:240ms"><i></i><b><span class="l l-pt">Esquerda</span><span class="l l-en">Left</span><span class="l l-es">Izquierda</span><span>80%</span></b></div><div class="md-fx" style="left:34.3%;width:31.3%;--a:0.091;--d:360ms"><i></i><b><span class="l l-pt">Centro</span><span class="l l-en">Centre</span><span class="l l-es">Centro</span><span>11%</span></b></div><div class="md-fx" style="left:65.7%;width:31.3%;--a:0.086;--d:480ms"><i></i><b><span class="l l-pt">Direita</span><span class="l l-en">Right</span><span class="l l-es">Derecha</span><span>10%</span></b></div><svg class="md-linhas2" viewBox="0 0 200 310" preserveAspectRatio="none"><g><rect x="6" y="6" width="188" height="298" rx="4"/><line x1="6" y1="155" x2="194" y2="155"/><circle cx="100" cy="155" r="27"/><rect x="41" y="6" width="118" height="49"/><rect x="73" y="6" width="54" height="16"/><path d="M79 55 A27 27 0 0 0 121 55"/><rect x="41" y="255" width="118" height="49"/><rect x="73" y="288" width="54" height="16"/><path d="M79 255 A27 27 0 0 1 121 255"/><rect x="89" y="4" width="22" height="3"/><rect x="89" y="303" width="22" height="3"/></g><g class="pts"><circle cx="100" cy="155" r="1.8"/><circle cx="100" cy="38" r="1.8"/><circle cx="100" cy="272" r="1.8"/></g></svg><div class="md-tk" data-i="0" style="left:20%;top:32%;width:20.6%;--d:620ms"><span class="pc">80%</span><span class="sg">ESQ</span></div><div class="md-tk sec" data-i="1" style="left:80%;top:32%;width:13.0%;--d:730ms"><span class="pc">10%</span><span class="sg">DIR</span></div><div class="md-tk sec" data-i="2" style="left:50%;top:15%;width:13.0%;--d:840ms"><span class="pc">10%</span><span class="sg">CA</span></div><div class="md-tk sec" data-i="3" style="left:50%;top:42%;width:10.5%;--d:950ms"><span class="pc">1%</span><span class="sg">MEI</span></div></div>
+            <div class="md-campo"><svg class="md-linhas2" viewBox="0 0 200 310" preserveAspectRatio="none"><g><rect x="6" y="6" width="188" height="298" rx="4"/><line x1="6" y1="155" x2="194" y2="155"/><circle cx="100" cy="155" r="27"/><rect x="41" y="6" width="118" height="49"/><rect x="73" y="6" width="54" height="16"/><path d="M79 55 A27 27 0 0 0 121 55"/><rect x="41" y="255" width="118" height="49"/><rect x="73" y="288" width="54" height="16"/><path d="M79 255 A27 27 0 0 1 121 255"/><rect x="89" y="4" width="22" height="3"/><rect x="89" y="303" width="22" height="3"/></g><g class="pts"><circle cx="100" cy="155" r="1.8"/><circle cx="100" cy="38" r="1.8"/><circle cx="100" cy="272" r="1.8"/></g></svg><div class="md-tk" data-i="0" style="left:20%;top:32%;width:24.4%;--d:620ms"><span class="pc">80%</span><span class="sg">ESQ</span></div><div class="md-tk sec" data-i="1" style="left:80%;top:32%;width:15.6%;--d:730ms"><span class="pc">10%</span><span class="sg">DIR</span></div><div class="md-tk sec" data-i="2" style="left:50%;top:15%;width:15.6%;--d:840ms"><span class="pc">10%</span><span class="sg">CA</span></div><div class="md-tk sec" data-i="3" style="left:50%;top:42%;width:12.7%;--d:950ms"><span class="pc">1%</span><span class="sg">MEI</span></div></div>
           </div>
           <div class="md-dir" aria-hidden="true">
             <span class="t"><span class="l l-pt">Sentido do jogo</span><span class="l l-en">Direction of play</span><span class="l l-es">Sentido del juego</span></span>
           </div>
         </div>
-        <div class="md-sub"><span class="l l-pt">As faixas são a participação dele em cada terço da largura do campo; os círculos, a posição exata. Passe o cursor para ver os jogos.</span><span class="l l-en">The bands are his share of each third of the pitch width; the circles are the exact position. Hover for the games.</span><span class="l l-es">Las franjas son su participación en cada tercio del ancho; los círculos, la posición exacta. Pase el cursor para ver los partidos.</span></div>
+        <div class="md-sub"><span class="l l-pt">Cada quadrante é uma posição, com o lado proporcional à raiz do percentual. Passe o cursor para ver os jogos.</span><span class="l l-en">Each quadrant is a position, its side scaled to the square root of the percentage. Hover for the games.</span><span class="l l-es">Cada cuadrante es una posición, con el lado proporcional a la raíz del porcentaje. Pase el cursor para ver los partidos.</span></div>
       </div>
     </div>
     <div class="tbl-f"><span class="l l-pt"><b>Posições</b> — distribuição sobre os 157 jogos da carreira profissional em que a posição foi registrada, fonte oGol, não o cadastro da Opta. Ponta e meia do mesmo corredor entram como uma função só: para quem lê o documento, e para o adversário que precisa marcá-lo, os dois são o mesmo trabalho no mesmo lado. <b>Ações</b> — grade de 20 por 30 quadrantes sobre os 7.090 eventos com coordenada do atleta, filtrados para conter apenas partidas de Brasileirão Série A do recorte; ficaram de fora 364 registros que a Opta devolve sem lugar no campo (evento anulado, substituição, cartão), todos com a coordenada (0,0), que sem esse filtro se empilhavam num quadrante só e criavam um ponto quente falso. Cada quadrante sobe conforme a densidade, e <b>cada fundamento tem escala própria</b>, normalizada pelo percentil 98 dos quadrantes com conteúdo — é o que permite ler a forma de um fundamento raro (242 finalizações) ao lado de um frequente (2.810 passes), e o preço é que a intensidade compara <b>dentro</b> de cada mapa, nunca entre mapas. Validação: os totais batem exatamente com o consolidado por partida da Opta. <b>É mapa de ações, não de rastreamento</b> — mostra onde houve ação registrada, nunca tempo de permanência.</span><span class="l l-en"><b>Positions</b> — distribution over the 157 senior career games with a registered position, source oGol, not Opta's registry. Winger and midfielder on the same flank count as a single role. <b>Actions</b> — a 20 by 30 grid over the athlete's 7,090 events with coordinates, filtered to Brazilian Série A matches only; 364 records that Opta returns with no pitch location (deleted events, substitutions, cards) were excluded, all carrying the coordinate (0,0), which without the filter piled into a single quadrant and created a false hotspot. Each quadrant rises with density, and <b>each fundamental has its own scale</b>, normalised by the 98th percentile of the filled quadrants, so intensity compares <b>within</b> each map, never between maps. Validation: totals match Opta's match-by-match aggregate exactly. <b>This is an action map, not tracking.</b></span><span class="l l-es"><b>Posiciones</b> — distribución sobre los 157 partidos de carrera con posición registrada, fuente oGol. Extremo y volante del mismo carril entran como una sola función. <b>Acciones</b> — grilla de 20 por 30 sobre los 7.090 eventos con coordenada, sólo partidos de Serie A; se excluyeron 364 registros sin lugar en el campo. <b>Cada fundamento tiene escala propia.</b> <b>Es mapa de acciones, no de seguimiento.</b></span></div>
