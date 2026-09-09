@@ -1056,7 +1056,7 @@
   }
 
   /* ---------- mapa de ações (relevo 3D) + mapa de posições, lado a lado ---------- */
-  .mdu{margin-top:30px;display:grid;grid-template-columns:1.06fr .94fr;
+  .mdu{margin-top:30px;display:grid;grid-template-columns:1fr 1fr;
     gap:clamp(22px,3.4vw,44px);align-items:start;}
   .mdh{margin-bottom:12px;font-family:'Bebas Neue',sans-serif;font-size:23px;
     letter-spacing:.02em;color:var(--ink);line-height:1.1;}
@@ -1074,8 +1074,8 @@
   .md-plane{position:absolute;inset:17% 9.5% 2% 9.5%;transform:rotateX(52deg);
     transform-style:preserve-3d;}
   .md-linhas{position:absolute;inset:0;width:100%;height:100%;}
-  .md-linhas g,.md-linhas2 g{fill:none;stroke:var(--ink);stroke-opacity:.30;stroke-width:1.1;}
-  .md-linhas .pts,.md-linhas2 .pts{fill:var(--ink);fill-opacity:.36;stroke:none;}
+  .md-linhas g{fill:none;stroke:var(--ink);stroke-opacity:.30;stroke-width:1.1;}
+  .md-linhas .pts{fill:var(--ink);fill-opacity:.36;stroke:none;}
   .md-c{position:absolute;opacity:0;border-radius:1px;
     transition:background-color .3s ease,box-shadow .3s ease;}
   .mdu.on .md-c{animation:mdsobe .7s cubic-bezier(.2,1.3,.4,1) forwards;}
@@ -1107,48 +1107,32 @@
     text-transform:uppercase;color:var(--grey-2);}
   .md-leg .bar{flex:1;height:8px;border-radius:2px;border:1px solid rgba(255,255,255,.10);
     background:linear-gradient(90deg,#ffe8b4,#ffd678 26%,#ffb242 52%,#ff8824 78%,#ff5414);}
-  /* --- campo de posições, chapado --- */
-  .md-pos{position:relative;width:100%;max-width:330px;aspect-ratio:200/310;
-    margin:0 0 4px;border-radius:10px;overflow:hidden;
-    background:linear-gradient(165deg,#151b28 0%,#101622 55%,#0b0f18 100%);
-    border:1px solid rgba(255,255,255,.12);box-shadow:inset 0 0 50px rgba(0,0,0,.5);}
-  .md-linhas2{position:absolute;inset:0;width:100%;height:100%;}
-  .md-m{position:absolute;z-index:3;transform:translate(-50%,-50%);aspect-ratio:1;
-    border-radius:8px;background:linear-gradient(150deg,#e2c455,#c9a63c);
-    box-shadow:0 3px 14px rgba(212,175,55,.24);opacity:0;scale:.55;
-    transition:opacity .6s cubic-bezier(.2,.9,.3,1),scale .6s cubic-bezier(.2,.9,.3,1);}
-  .mdu.on .md-m{opacity:1;scale:1;}
-  .md-m.sec{background:linear-gradient(150deg,rgba(212,175,55,.46),rgba(184,145,43,.3));
-    box-shadow:none;}
-  .md-t{position:absolute;left:50%;top:calc(100% + 6px);transform:translateX(-50%);
-    white-space:nowrap;font-family:'JetBrains Mono',monospace;font-size:9px;
-    letter-spacing:.05em;padding:3px 8px;border-radius:6px;background:rgba(9,12,18,.92);
-    border:1px solid rgba(255,255,255,.14);color:var(--grey);}
-  .md-t b{color:var(--gold);font-weight:700;}
-  /* --- barras de posição, padrão do componente V5 --- */
-  .md-b{margin-top:16px;opacity:0;transform:translateY(8px);}
-  .mdu.on .md-b{animation:mdbar .5s ease forwards;animation-delay:var(--d);}
-  @keyframes mdbar{to{opacity:1;transform:none;}}
-  .md-b .l{display:flex;align-items:baseline;gap:10px;}
-  .md-b .n{font-size:14px;font-weight:500;color:var(--ink);}
-  .md-b .p{margin-left:auto;font-family:'Bebas Neue',sans-serif;font-size:24px;
-    color:var(--gold);line-height:1;}
-  .md-b .t{margin-top:6px;height:7px;border-radius:100px;
-    background:rgba(255,255,255,.07);overflow:hidden;}
-  html[data-theme="light"] .md-b .t{background:rgba(12,18,30,.09);}
-  .md-b .t i{display:block;height:100%;width:0;border-radius:100px;
-    background:linear-gradient(90deg,rgba(212,175,55,.55),var(--gold));}
-  .mdu.on .md-b .t i{animation:mdfill .9s cubic-bezier(.2,.8,.3,1) forwards;
-    animation-delay:calc(var(--d) + 120ms);}
-  @keyframes mdfill{to{width:var(--w);}}
-  .md-b.main .n{font-weight:600;} .md-b.main .p{font-size:30px;} .md-b.main .t{height:9px;}
+  /* --- campo de posições: mesmo container e mesmo ângulo do de ações --- */
+  .md-pm{position:absolute;transform-style:preserve-3d;opacity:0;
+    background:linear-gradient(150deg,#e2c455,#c9a63c);border-radius:3px;
+    box-shadow:0 0 14px rgba(212,175,55,.35);cursor:default;}
+  .md-pm.sec{background:linear-gradient(150deg,rgba(226,196,85,.62),rgba(201,166,60,.42));
+    box-shadow:0 0 8px rgba(212,175,55,.18);}
+  /* pegada no gramado: um retangulo raso sob cada bloco. Existe porque o campo de
+     posicoes tem QUATRO marcadores contra os 454 quadrantes do mapa de acoes, e sem
+     ela o par de mapas fica desequilibrado — um denso, o outro vazio. A pegada nao
+     inventa dado: e a mesma posicao, projetada no chao. */
+  .md-pf{position:absolute;border-radius:6px;background:rgba(212,175,55,.13);
+    opacity:0;transition:opacity .6s ease;transition-delay:var(--d);}
+  .mdu.on .md-pf{opacity:1;}
+  .mdu.on .md-pm{animation:mdsobe .75s cubic-bezier(.2,1.3,.4,1) forwards;
+    animation-delay:var(--d);}
+  /* o rótulo fica DE PÉ: gira de volta o mesmo ângulo do plano, senão deita junto
+     com ele e vira um borrão em perspectiva */
+  .md-pl{position:absolute;left:50%;bottom:100%;white-space:nowrap;
+    transform:translateX(-50%) rotateX(-52deg);transform-origin:bottom center;
+    font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:.03em;
+    color:#f2d97a;text-shadow:0 2px 10px rgba(0,0,0,.8);padding-bottom:5px;}
+  .md-pm.sec .md-pl{font-size:15px;color:rgba(242,217,122,.8);}
   @media (prefers-reduced-motion:reduce){
-    .md-c{opacity:var(--op);transform:translateZ(var(--z));animation:none;}
-    .md-m{opacity:1;scale:1;} .md-b{opacity:1;transform:none;animation:none;}
-    .md-b .t i{width:var(--w);animation:none;} }
-  @media(max-width:900px){
-    .mdu{grid-template-columns:1fr;gap:34px;}
-    .md-pos{max-width:300px;margin-left:auto;margin-right:auto;} }
+    .md-c,.md-pm{opacity:var(--op);transform:translateZ(var(--z));animation:none;}
+    .md-pf{opacity:1;transition:none;} }
+  @media(max-width:900px){ .mdu{grid-template-columns:1fr;gap:34px;} }
 
   /* ---------- seletor de recorte do radar ---------- */
   .rdsw{position:relative;z-index:2;display:flex;flex-wrap:wrap;gap:8px;padding:0 24px 14px;}
@@ -1256,8 +1240,15 @@
       </div>
       <div>
         <div class="mdh"><span class="l l-pt">Posições executadas</span><span class="l l-en">Positions played</span><span class="l l-es">Posiciones ejecutadas</span><small><span class="l l-pt">157 jogos de carreira com posição registrada · oGol</span><span class="l l-en">157 career games with a registered position · oGol</span><span class="l l-es">157 partidos de carrera con posición registrada · oGol</span></small></div>
-        <div class="md-pos"><svg class="md-linhas2" viewBox="0 0 200 310" preserveAspectRatio="none"><g><rect x="6" y="6" width="188" height="298" rx="4"/><line x1="6" y1="155" x2="194" y2="155"/><circle cx="100" cy="155" r="27"/><rect x="41" y="6" width="118" height="49"/><rect x="73" y="6" width="54" height="16"/><path d="M79 55 A27 27 0 0 0 121 55"/><rect x="41" y="255" width="118" height="49"/><rect x="73" y="288" width="54" height="16"/><path d="M79 255 A27 27 0 0 1 121 255"/><rect x="89" y="4" width="22" height="3"/><rect x="89" y="303" width="22" height="3"/></g><g class="pts"><circle cx="100" cy="155" r="1.8"/><circle cx="100" cy="38" r="1.8"/><circle cx="100" cy="272" r="1.8"/></g></svg><div class="md-m" style="left:20%;top:32%;width:15.6%"><div class="md-t">ESQ · <b>80%</b></div></div><div class="md-m sec" style="left:80%;top:32%;width:5.4%"><div class="md-t">DIR · <b>10%</b></div></div><div class="md-m sec" style="left:50%;top:15%;width:5.4%"><div class="md-t">CA · <b>10%</b></div></div><div class="md-m sec" style="left:50%;top:42%;width:2.0%"><div class="md-t">MEI · <b>1%</b></div></div></div>
-        <div class="md-b main" style="--d:560ms"><div class="l"><span class="n"><span class="l l-pt">Pela esquerda</span><span class="l l-en">On the left</span><span class="l l-es">Por la izquierda</span></span><span class="p">80%</span></div><div class="t"><i style="--w:100%"></i></div></div><div class="md-b" style="--d:710ms"><div class="l"><span class="n"><span class="l l-pt">Pela direita</span><span class="l l-en">On the right</span><span class="l l-es">Por la derecha</span></span><span class="p">10%</span></div><div class="t"><i style="--w:12%"></i></div></div><div class="md-b" style="--d:860ms"><div class="l"><span class="n"><span class="l l-pt">Centroavante</span><span class="l l-en">Centre-forward</span><span class="l l-es">Delantero centro</span></span><span class="p">10%</span></div><div class="t"><i style="--w:12%"></i></div></div><div class="md-b" style="--d:1010ms"><div class="l"><span class="n"><span class="l l-pt">Meia ofensivo</span><span class="l l-en">Attacking midfielder</span><span class="l l-es">Mediapunta</span></span><span class="p">1%</span></div><div class="t"><i style="--w:2%"></i></div></div>
+        <div class="md-wrap">
+          <div class="md-persp">
+            <div class="md-plane"><svg class="md-linhas" viewBox="0 0 200 310" preserveAspectRatio="none"><g><rect x="6" y="6" width="188" height="298" rx="4"/><line x1="6" y1="155" x2="194" y2="155"/><circle cx="100" cy="155" r="27"/><rect x="41" y="6" width="118" height="49"/><rect x="73" y="6" width="54" height="16"/><path d="M79 55 A27 27 0 0 0 121 55"/><rect x="41" y="255" width="118" height="49"/><rect x="73" y="288" width="54" height="16"/><path d="M79 255 A27 27 0 0 1 121 255"/><rect x="89" y="4" width="22" height="3"/><rect x="89" y="303" width="22" height="3"/></g><g class="pts"><circle cx="100" cy="155" r="1.8"/><circle cx="100" cy="38" r="1.8"/><circle cx="100" cy="272" r="1.8"/></g></svg><div class="md-pf" style="left:-5.32%;top:15.66%;width:50.64%;height:32.67%;--d:620ms"></div><div class="md-pm" data-i="0" style="left:5.28%;top:22.50%;width:29.44%;height:18.99%;--z:74px;--op:1;--d:620ms"><span class="md-pl">80%</span></div><div class="md-pf" style="left:71.21%;top:26.33%;width:17.59%;height:11.35%;--d:750ms"></div><div class="md-pm sec" data-i="1" style="left:74.89%;top:28.70%;width:10.22%;height:6.60%;--z:19px;--op:1;--d:750ms"><span class="md-pl">10%</span></div><div class="md-pf" style="left:41.21%;top:9.33%;width:17.59%;height:11.35%;--d:880ms"></div><div class="md-pm sec" data-i="2" style="left:44.89%;top:11.70%;width:10.22%;height:6.60%;--z:19px;--op:1;--d:880ms"><span class="md-pl">10%</span></div><div class="md-pf" style="left:46.76%;top:39.91%;width:6.47%;height:4.18%;--d:1010ms"></div><div class="md-pm sec" data-i="3" style="left:48.12%;top:40.79%;width:3.76%;height:2.43%;--z:13px;--op:1;--d:1010ms"><span class="md-pl">1%</span></div></div>
+          </div>
+          <div class="md-dir" aria-hidden="true">
+            <span class="t"><span class="l l-pt">Sentido do jogo</span><span class="l l-en">Direction of play</span><span class="l l-es">Sentido del juego</span></span>
+          </div>
+        </div>
+        <div class="md-sub"><span class="l l-pt">Passe o cursor sobre cada bloco para ver os jogos. A altura do bloco é o percentual; o lado é a raiz dele, para o marcador de 80% não comer o campo.</span><span class="l l-en">Hover a block to see the games. Block height is the percentage; its footprint is the square root of it, so the 80% marker does not swallow the pitch.</span><span class="l l-es">Pase el cursor sobre cada bloque para ver los partidos. La altura es el porcentaje; el lado es su raíz.</span></div>
       </div>
     </div>
     <div class="tbl-f"><span class="l l-pt"><b>Posições</b> — distribuição sobre os 157 jogos da carreira profissional em que a posição foi registrada, fonte oGol, não o cadastro da Opta. Ponta e meia do mesmo corredor entram como uma função só: para quem lê o documento, e para o adversário que precisa marcá-lo, os dois são o mesmo trabalho no mesmo lado. <b>Ações</b> — grade de 20 por 30 quadrantes sobre os 7.090 eventos com coordenada do atleta, filtrados para conter apenas partidas de Brasileirão Série A do recorte; ficaram de fora 364 registros que a Opta devolve sem lugar no campo (evento anulado, substituição, cartão), todos com a coordenada (0,0), que sem esse filtro se empilhavam num quadrante só e criavam um ponto quente falso. Cada quadrante sobe conforme a densidade, e <b>cada fundamento tem escala própria</b>, normalizada pelo percentil 98 dos quadrantes com conteúdo — é o que permite ler a forma de um fundamento raro (242 finalizações) ao lado de um frequente (2.810 passes), e o preço é que a intensidade compara <b>dentro</b> de cada mapa, nunca entre mapas. Validação: os totais batem exatamente com o consolidado por partida da Opta. <b>É mapa de ações, não de rastreamento</b> — mostra onde houve ação registrada, nunca tempo de permanência.</span><span class="l l-en"><b>Positions</b> — distribution over the 157 senior career games with a registered position, source oGol, not Opta's registry. Winger and midfielder on the same flank count as a single role. <b>Actions</b> — a 20 by 30 grid over the athlete's 7,090 events with coordinates, filtered to Brazilian Série A matches only; 364 records that Opta returns with no pitch location (deleted events, substitutions, cards) were excluded, all carrying the coordinate (0,0), which without the filter piled into a single quadrant and created a false hotspot. Each quadrant rises with density, and <b>each fundamental has its own scale</b>, normalised by the 98th percentile of the filled quadrants, so intensity compares <b>within</b> each map, never between maps. Validation: totals match Opta's match-by-match aggregate exactly. <b>This is an action map, not tracking.</b></span><span class="l l-es"><b>Posiciones</b> — distribución sobre los 157 partidos de carrera con posición registrada, fuente oGol. Extremo y volante del mismo carril entran como una sola función. <b>Acciones</b> — grilla de 20 por 30 sobre los 7.090 eventos con coordenada, sólo partidos de Serie A; se excluyeron 364 registros sin lugar en el campo. <b>Cada fundamento tiene escala propia.</b> <b>Es mapa de acciones, no de seguimiento.</b></span></div>
@@ -1569,6 +1560,35 @@ const ANIMA = '.pes, .cr, .evgrid, .ocp, .lim, .func-list';
   document.querySelectorAll('.md-chips button').forEach((b,i)=>
     b.addEventListener('click',()=>troca(i)));
   document.addEventListener('langchange', texto);
+
+  /* detalhe da posicao no #tip, o mesmo tooltip do radar e da dispersao. As barras
+     embaixo do mapa sairam por ordem do dono: a informacao vem no passar do mouse. */
+  const POS = [{"rotulo": ["Pela esquerda", "On the left", "Por la izquierda"], "pct": 79.6, "jogos": 125}, {"rotulo": ["Pela direita", "On the right", "Por la derecha"], "pct": 9.6, "jogos": 15}, {"rotulo": ["Centroavante", "Centre-forward", "Delantero centro"], "pct": 9.6, "jogos": 15}, {"rotulo": ["Meia ofensivo", "Attacking midfielder", "Mediapunta"], "pct": 1.3, "jogos": 2}];
+  const tip = document.getElementById('tip');
+  function tipShow(ev, html){
+    if(!tip) return;
+    const c = ev.touches ? ev.touches[0] : ev;
+    tip.innerHTML = html; tip.style.opacity = 1;
+    const b = tip.getBoundingClientRect();
+    let L2 = c.clientX + 16, T2 = c.clientY - b.height / 2;
+    if(L2 + b.width > innerWidth - 12) L2 = c.clientX - b.width - 16;
+    if(T2 < 10) T2 = 10;
+    if(T2 + b.height > innerHeight - 10) T2 = innerHeight - b.height - 10;
+    tip.style.left = L2 + 'px'; tip.style.top = T2 + 'px';
+  }
+  document.querySelectorAll('.md-pm').forEach(el=>{
+    const m = POS[+el.dataset.i];
+    if(!m) return;
+    const html = () => '<div class="t1">' + tx(m.rotulo) + '</div>' +
+      '<div class="t2">' + tx(["157 jogos de carreira com posição registrada · oGol", "157 career games with a registered position · oGol", "157 partidos de carrera con posición registrada · oGol"]) + '</div><hr>' +
+      '<div class="r"><span>' + tx(["jogos", "games", "partidos"]) + '</span><b>' + m.jogos + '</b></div>' +
+      '<div class="r"><span>' + tx(["dos jogos com posição", "of games with a position", "de los partidos"]) + '</span><b>' + m.pct.toFixed(0).replace('.', ',') + '%</b></div>';
+    const mostra = e => tipShow(e, html());
+    el.addEventListener('mouseenter', mostra);
+    el.addEventListener('mousemove', mostra);
+    el.addEventListener('mouseleave', ()=>{ if(tip) tip.style.opacity = 0; });
+    el.addEventListener('touchstart', e=>{ e.stopPropagation(); mostra(e); }, {passive:true});
+  });
 
   const ligar = () => bloco.classList.add('on');
   if(!('IntersectionObserver' in window)){ ligar(); return; }
